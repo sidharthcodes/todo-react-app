@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
 const Form = () => {
-    
+
     const [inputValue, setInputvalue] = useState("");
 
     const handleInputChange = (event) => {
