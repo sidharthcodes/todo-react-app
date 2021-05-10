@@ -1,26 +1,56 @@
 import React, {useState} from "react";
 
-const Todo = () => {
+const Todo = ( {title} ) => {
 
     const [isEditing, setIsEditing] = useState(false);
+    const [value, setValue] = useState(title);
+    const [tempValue, setTempValue] = useState(title);
 
     const handleDivDoubleClick = () => {
         setIsEditing(true);
     }
 
+    const handleInputKeyDown = (event) => {
+        const key = event.keyCode;
+        if(key === 13){ // 13 -> enter
+            setValue(tempValue);
+            setIsEditing(false);
+        }else if(key === 27){ // 27 -> escape
+            setTempValue(value);
+            setIsEditing(false);
+        }
+    }
+
+    const handleInputChange = (event) => {
+        setTempValue(event.target.value);
+    }
+
     return(
-        isEditing ? 
-        <input /> :
         <div className="row" onDoubleClick={handleDivDoubleClick}>
-            <div className="column five wide">
-                <h3>List-Item-1</h3>
-            </div>
-            <div className="column one wide">
-                <button className="ui button circular icon blue"><i className="check icon"></i></button>
-            </div>
-            <div className="column one wide">
-                <button className="ui button circular icon red"><i className="remove icon"></i></button>
-            </div>
+            {    
+            isEditing ? 
+                <div className="column seven wide">
+                    <div className="ui input fluid">
+                        <input
+                            onChange={handleInputChange}
+                            onKeyDown={handleInputKeyDown}
+                            autoFocus={true}
+                            value={tempValue}
+                        />
+                    </div>
+                </div> :
+                <>
+                    <div className="column five wide">
+                        <h3>{value}</h3>
+                    </div>
+                    <div className="column one wide">
+                        <button className="ui button circular icon blue"><i className="check icon"></i></button>
+                    </div>
+                    <div className="column one wide">
+                        <button className="ui button circular icon red"><i className="remove icon"></i></button>
+                    </div>
+                </>
+            }
         </div>
     );
 }

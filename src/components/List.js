@@ -6,7 +6,7 @@ const List = () => {
     return(
         <div className="ui container">
             <div className="ui grid center aligned">
-                <Todo />
+                <Todo title="Task #1" />
             </div>
         </div>
     );
