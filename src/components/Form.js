@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-const Form = () => {
+const Form = ({ addTodo }) => {
 
     const [inputValue, setInputvalue] = useState("");
 
@@ -8,8 +8,15 @@ const Form = () => {
         setInputvalue(event.target.value);
     }
 
+    const handleFromSubmit = (event) => {
+        event.preventDefault();
+        if(inputValue.trim() === "") return;
+        addTodo({ title: inputValue, completed: false });
+        setInputvalue("");
+    }
+
     return(
-        <form className="ui form">
+        <form className="ui form" onSubmit={handleFromSubmit}>
             <div className="ui grid center aligned">
                 <div className="row">
                     <div className="column six wide">

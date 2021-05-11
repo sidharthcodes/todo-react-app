@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 
-const Todo = ( {title} ) => {
+const Todo = ( {title, completed} ) => {
 
     const [isEditing, setIsEditing] = useState(false);
     const [value, setValue] = useState(title);
     const [tempValue, setTempValue] = useState(title);
-    const [completed, setCompleted] = useState(false);
+    const [completedState, setCompleted] = useState(completed);
 
     const handleDivDoubleClick = () => {
         setIsEditing(true);
@@ -27,11 +27,11 @@ const Todo = ( {title} ) => {
     }
 
     const handleButtonClick = () => {
-        setCompleted(true);
+        setCompleted((oldCompletedState) => !oldCompletedState);
     }
 
     return(
-        <div className="row" onDoubleClick={handleDivDoubleClick}>
+        <div className="row">
             {    
             isEditing ? 
                 <div className="column seven wide">
@@ -45,12 +45,12 @@ const Todo = ( {title} ) => {
                     </div>
                 </div> :
                 <>
-                    <div className="column five wide">
-                        {completed ? <h3><s>{value}</s></h3> : <h3>{value}</h3>}
+                    <div className="column six wide" onDoubleClick={handleDivDoubleClick}>
+                        {completedState ? <h3><s>{value}</s></h3> : <h3>{value}</h3>}
                     </div>
                     <div className="column one wide">
                         <button 
-                            className="ui button circular icon blue"
+                            className={"ui button circular icon" + (completedState ? " green" : " blue")}
                             onClick={handleButtonClick}
                         >
                             <i className="check icon"></i>
