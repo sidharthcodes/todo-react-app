@@ -7,9 +7,9 @@ import Section from "./components/Section";
 const appTitle = "To Do App";
 
 const list = [
-    {title: "Task #1", completed: false},
-    {title: "Task #2", completed: false},
-    {title: "Task #3", completed: false}
+    { id: 1, title: "Task #1", completed: false},
+    { id: 2, title: "Task #2", completed: false},
+    { id: 3, title: "Task #3", completed: false}
 ];
 
 
@@ -18,6 +18,10 @@ const App = () => {
 
     const addTodo = (item) => {
         setTodoList(oldList => [...oldList, item]); // spread operator
+    }
+
+    const removeTodo = (id) => {
+        setTodoList(oldList => oldList.filter((item) => item.id !== id))
     }
 
     return(
@@ -29,7 +33,7 @@ const App = () => {
                 <Form addTodo={addTodo} />
             </Section>
             <Section>
-                <List list={todoList} />
+                <List removeTodo={removeTodo} list={todoList} />
             </Section>
         </div>
     );

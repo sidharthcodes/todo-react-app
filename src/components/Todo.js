@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-const Todo = ( {title, completed} ) => {
+const Todo = ({ title, completed, removeTodo }) => {
 
     const [isEditing, setIsEditing] = useState(false);
     const [value, setValue] = useState(title);
@@ -57,7 +57,12 @@ const Todo = ( {title, completed} ) => {
                         </button>
                     </div>
                     <div className="column one wide">
-                        <button className="ui button circular icon red"><i className="remove icon"></i></button>
+                        <button 
+                            className="ui button circular icon red"
+                            onClick={removeTodo}
+                        >
+                            <i className="remove icon"></i>
+                        </button>
                     </div>
                 </>
             }
