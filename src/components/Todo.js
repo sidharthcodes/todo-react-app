@@ -5,6 +5,7 @@ const Todo = ( {title} ) => {
     const [isEditing, setIsEditing] = useState(false);
     const [value, setValue] = useState(title);
     const [tempValue, setTempValue] = useState(title);
+    const [completed, setCompleted] = useState(false);
 
     const handleDivDoubleClick = () => {
         setIsEditing(true);
@@ -25,6 +26,10 @@ const Todo = ( {title} ) => {
         setTempValue(event.target.value);
     }
 
+    const handleButtonClick = () => {
+        setCompleted(true);
+    }
+
     return(
         <div className="row" onDoubleClick={handleDivDoubleClick}>
             {    
@@ -41,10 +46,15 @@ const Todo = ( {title} ) => {
                 </div> :
                 <>
                     <div className="column five wide">
-                        <h3>{value}</h3>
+                        {completed ? <h3><s>{value}</s></h3> : <h3>{value}</h3>}
                     </div>
                     <div className="column one wide">
-                        <button className="ui button circular icon blue"><i className="check icon"></i></button>
+                        <button 
+                            className="ui button circular icon blue"
+                            onClick={handleButtonClick}
+                        >
+                            <i className="check icon"></i>
+                        </button>
                     </div>
                     <div className="column one wide">
                         <button className="ui button circular icon red"><i className="remove icon"></i></button>
