@@ -12,7 +12,7 @@ mongoose.connect("mongodb://localhost/todolist", connectOptions)
     .then(() => console.log("Connected successfully"))
     .catch((err) => console.error(err));
 
-app.use("/todo", todoRouter);
+app.use("/todos", todoRouter);
 
 app.listen(PORT, () => {
     console.log(`Listening to Port: ${PORT}`);
