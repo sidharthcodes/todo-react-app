@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import axios from "axios";
 
 import Form from "./components/Form";
 import List from "./components/List";
@@ -6,15 +7,24 @@ import Section from "./components/Section";
 
 const appTitle = "To Do App";
 
-const list = [
-    { id: 1, title: "Task #1", completed: false},
-    { id: 2, title: "Task #2", completed: false},
-    { id: 3, title: "Task #3", completed: false}
-];
-
+// const list = [
+//     { id: 1, title: "Task #1", completed: false},
+//     { id: 2, title: "Task #2", completed: false},
+//     { id: 3, title: "Task #3", completed: false}
+// ];
 
 const App = () => {
-    const [todoList, setTodoList] = useState(list);
+
+    const [todoList, setTodoList] = useState([]);
+
+    useEffect(() => {
+        async function fetchData(){
+            const { data } = await axios.get("http://localhost:4000/todos");
+            console.log(data);
+            setTodoList(data);
+        }
+        fetchData();
+    }, []);
 
     const addTodo = (item) => {
         setTodoList(oldList => [...oldList, item]); // spread operator
