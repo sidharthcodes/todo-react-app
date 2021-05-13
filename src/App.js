@@ -13,25 +13,34 @@ const appTitle = "To Do App";
 //     { id: 3, title: "Task #3", completed: false}
 // ];
 
+// our backend server
+const baseUrl = "http://localhost:4000";
+
 const App = () => {
 
     const [todoList, setTodoList] = useState([]);
 
     useEffect(() => {
         async function fetchData(){
-            const { data } = await axios.get("http://localhost:4000/todos");
+            const { data } = await axios.get(`${baseUrl}/todos`);
             console.log(data);
             setTodoList(data);
         }
         fetchData();
     }, []);
 
-    const addTodo = (item) => {
-        setTodoList(oldList => [...oldList, item]); // spread operator
+    const addTodo = async (item) => {
+        const { data } = await axios.post(`${baseUrl}/todos`, item);
+        setTodoList(oldList => [...oldList, data]); // spread operator
     }
 
-    const removeTodo = (id) => {
-        setTodoList(oldList => oldList.filter((item) => item.id !== id))
+    const removeTodo = async (id) => {
+        await axios.delete(`${baseUrl}/todos/${id}`);
+        setTodoList(oldList => oldList.filter((item) => item._id !== id))
+    }
+
+    const editTodo = async (id, item) => {
+        await axios.put(`${baseUrl}/todos/${id}`, item);
     }
 
     return(
@@ -43,7 +52,11 @@ const App = () => {
                 <Form addTodo={addTodo} />
             </Section>
             <Section>
-                <List removeTodo={removeTodo} list={todoList} />
+                <List
+                    editTodo={editTodo}
+                    removeTodo={removeTodo}
+                    list={todoList}
+                />
             </Section>
         </div>
     );

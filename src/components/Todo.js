@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-const Todo = ({ title, completed, removeTodo }) => {
+const Todo = ({ title, completed, removeTodo, editTodo }) => {
 
     const [isEditing, setIsEditing] = useState(false);
     const [value, setValue] = useState(title);
@@ -14,6 +14,7 @@ const Todo = ({ title, completed, removeTodo }) => {
     const handleInputKeyDown = (event) => {
         const key = event.keyCode;
         if(key === 13){ // 13 -> enter
+            editTodo({ title: tempValue});
             setValue(tempValue);
             setIsEditing(false);
         }else if(key === 27){ // 27 -> escape
@@ -27,7 +28,11 @@ const Todo = ({ title, completed, removeTodo }) => {
     }
 
     const handleButtonClick = () => {
-        setCompleted((oldCompletedState) => !oldCompletedState);
+        setCompleted((oldCompletedState) => {
+            const newState = !oldCompletedState;
+            editTodo({ completed: newState });
+            return newState;
+        });
     }
 
     return(
